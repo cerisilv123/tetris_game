@@ -2,6 +2,7 @@
 #include "scoreboard.hpp"
 #include <iostream>
 
+// Draws seperating line between the scoreboard and the game
 void scoreboard::draw_seperating_line(sf::RenderWindow &window) {
     sf::Vertex line[] = {
         sf::Vertex(sf::Vector2f(300,0)),
@@ -10,6 +11,7 @@ void scoreboard::draw_seperating_line(sf::RenderWindow &window) {
     window.draw(line, 2, sf::Lines);
 }
 
+// Draws the next shape that will drop
 void scoreboard::draw_next_shape(sf::RenderWindow &window, tetris &tetris) {
     
     sf::Font font;
@@ -55,6 +57,7 @@ void scoreboard::draw_next_shape(sf::RenderWindow &window, tetris &tetris) {
     }
 }
 
+// Displays the score on the scoreboard
 void scoreboard::draw_score(sf::RenderWindow &window, grid &grid) {
     sf::Font font;
     if (!font.loadFromFile("font.ttf")) {

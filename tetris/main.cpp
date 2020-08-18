@@ -9,9 +9,7 @@
 #include <iostream>
 
 int main() {
-
     game Game;
     Game.play_game();
-    
     return 0;
 }

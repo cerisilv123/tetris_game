@@ -5,9 +5,13 @@ game::game()  {
     this->game_active = false;
 }
 
+// Displays menu
 void game::display_menu(sf::RenderWindow &window) {
-    // Displays menu
     while (this->game_active == false) {
+        
+        // Clear Screen
+        window.clear();
+        
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
@@ -45,10 +49,17 @@ void game::display_menu(sf::RenderWindow &window) {
         
         window.draw(text);
         window.draw(text2);
+        
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
+            this->game_active = true;
+        }
+        
+        // Display Screen
         window.display();
     }
 }
 
+// Manages the whole game flow
 void game::play_game() {
     sf::RenderWindow window(sf::VideoMode(520,750), "Tetris" );
         
@@ -78,13 +89,16 @@ void game::play_game() {
                 }
             }
             
-            // Display Menu
-            display_menu(window);
             
             float delta_time = clock.getElapsedTime().asSeconds();
             if (delta_time > min_time) {
                 
+                // Clear Screen
                 window.clear();
+                
+                // Display Menu
+                this->reset_game(Grid, Tetris);
+                display_menu(window);
                 
                 Tetris.spawn_tetris(min_time);
                 Grid.delete_line(Tetris, window, min_time);
@@ -116,8 +130,52 @@ void game::play_game() {
                 
                 Tetris.draw_tetris(window);
                 
+                // Display Screen
                 window.display();
+                // Reset Clock
                 clock.restart();
+                
             }
         }
+}
+
+// Resets variables when the player loses
+void game::reset_game(grid &grid, tetris &tetris) {
+    if (grid.game_over == true) {
+        grid.game_over = false;
+        grid.points = 0;
+        grid.line_deleted = false;
+        grid.grid_coords = {
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7},
+            {7,7,7,7,7,7,7,7,7,7}
+        };
+        
+        tetris.tetris_active = false;
+        tetris.first_spawn = true;
+        
+        this->game_active = false;
+    }
 }

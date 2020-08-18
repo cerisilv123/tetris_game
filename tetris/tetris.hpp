@@ -9,13 +9,15 @@
 class tetris {
 private:
     std::vector <std::vector<sf::Vector2f>> spawn_coords;
-    std::vector <sf::Vector2f> O {sf::Vector2f(3,0), sf::Vector2f(4,0), sf::Vector2f(3,1), sf::Vector2f(4,1)};
-    std::vector <sf::Vector2f> I {sf::Vector2f(3,0), sf::Vector2f(4,0), sf::Vector2f(5,0), sf::Vector2f(6,0)};
-    std::vector <sf::Vector2f> T {sf::Vector2f(4,0), sf::Vector2f(3,0), sf::Vector2f(4,1), sf::Vector2f(5,0)};
-    std::vector <sf::Vector2f> L {sf::Vector2f(4,0), sf::Vector2f(3,0), sf::Vector2f(3,1), sf::Vector2f(5,0)};
-    std::vector <sf::Vector2f> J {sf::Vector2f(4,0), sf::Vector2f(3,0), sf::Vector2f(5,0), sf::Vector2f(5,1)};
-    std::vector <sf::Vector2f> Z {sf::Vector2f(4,1), sf::Vector2f(3,0), sf::Vector2f(4,0), sf::Vector2f(5,1)};
-    std::vector <sf::Vector2f> S {sf::Vector2f(4,1), sf::Vector2f(4,0), sf::Vector2f(5,0), sf::Vector2f(3,1)};
+    // Tetris Pieces
+    std::vector <sf::Vector2f> O;
+    std::vector <sf::Vector2f> I;
+    std::vector <sf::Vector2f> T;
+    std::vector <sf::Vector2f> L;
+    std::vector <sf::Vector2f> J;
+    std::vector <sf::Vector2f> Z;
+    std::vector <sf::Vector2f> S;
+    
     std::vector <sf::Vector2f> live_coords; 
     std::vector <sf::Vector2f> next_coords;
     sf::Vector2f rotation_point;
@@ -26,8 +28,8 @@ private:
 public:
     tetris();
     int colour{};
-    bool tetris_active; // RESET
-    bool first_spawn; // RESET
+    bool tetris_active; // RESET when game is over
+    bool first_spawn; // RESET when game is over
     int next_colour_index{}; 
     bool rotate_left;
     bool rotate_right; 

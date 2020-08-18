@@ -18,7 +18,8 @@ private:
 public:
     game(); 
     void display_menu(sf::RenderWindow &window);
-    void play_game(); 
+    void play_game();
+    void reset_game(grid &grid, tetris &tetris);
 };
 
 #endif /* game_hpp */

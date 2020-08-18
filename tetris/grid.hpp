@@ -10,14 +10,15 @@
 
 class grid {
 private:
-    int points; // RESET
     int columns;
     int rows;
     sf::RectangleShape grid_square; // square shape to draw out the grid with (not the tetrominoes)
     sf::RectangleShape grid_block; // Square block to draw out the collided tetrominoes
-    std::vector<std::vector<int>> grid_coords {}; // RESET
 public:
     grid();
+    int points; // RESET when game is over
+    bool game_over; 
+    std::vector<std::vector<int>> grid_coords {}; // RESET when game is over
     void add_shape_to_grid(std::vector<sf::Vector2f> &coords, tetris &tetris);
     bool has_collided_bottom(tetris &tetris);
     bool has_collided_grid(tetris &tetris); 
@@ -30,7 +31,7 @@ public:
     void draw_future_position(tetris tetris, sf::RenderWindow &window);
     bool bottom_of_grid(std::vector<sf::Vector2f> &temp);
     bool above_grid(std::vector<sf::Vector2f> &temp);
-    bool line_deleted;
+    bool line_deleted; // RESET when game is over
     int return_points();
 };
 

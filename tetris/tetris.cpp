@@ -6,11 +6,17 @@
 #include <iostream>
 
 tetris::tetris() {
-    // No rotation points
+    O = {sf::Vector2f(3,0), sf::Vector2f(4,0), sf::Vector2f(3,1), sf::Vector2f(4,1)};
+    I = {sf::Vector2f(3,0), sf::Vector2f(4,0), sf::Vector2f(5,0), sf::Vector2f(6,0)};
+    T = {sf::Vector2f(4,0), sf::Vector2f(3,0), sf::Vector2f(4,1), sf::Vector2f(5,0)};
+    L = {sf::Vector2f(4,0), sf::Vector2f(3,0), sf::Vector2f(3,1), sf::Vector2f(5,0)};
+    J = {sf::Vector2f(4,0), sf::Vector2f(3,0), sf::Vector2f(5,0), sf::Vector2f(5,1)};
+    Z = {sf::Vector2f(4,1), sf::Vector2f(3,0), sf::Vector2f(4,0), sf::Vector2f(5,1)};
+    S = {sf::Vector2f(4,1), sf::Vector2f(4,0), sf::Vector2f(5,0), sf::Vector2f(3,1)};
+    
     this->spawn_coords.push_back(I); // 0 - Colour: Red
-    this->spawn_coords.push_back(O); // 1 - Color: Orange
-//     Rotation points = index 0
-    this->spawn_coords.push_back(L); // 2 - Coloru: Green
+    this->spawn_coords.push_back(O); // 1 - Colour: Orange
+    this->spawn_coords.push_back(L); // 2 - Colour: Green
     this->spawn_coords.push_back(T); // 3 - Colour: Blue
     this->spawn_coords.push_back(S); // 4 - Colour: Yellow
     this->spawn_coords.push_back(Z); // 5 - Colour: Magenta
@@ -36,6 +42,7 @@ tetris::tetris() {
     this->first_spawn = true;
 }
 
+// Spawns a random tetris on the grid
 void tetris::spawn_tetris(float &min_time) {
     if (tetris_active == false && first_spawn == true) {
         int i = rand() % 6;
@@ -57,6 +64,7 @@ void tetris::spawn_tetris(float &min_time) {
     }
 }
 
+// Draws tetris to the grid
 void tetris::draw_tetris(sf::RenderWindow &window) {
     for (size_t i = 0; i < live_coords.size(); i++) {
         sf::RectangleShape block;
@@ -84,6 +92,7 @@ void tetris::draw_tetris(sf::RenderWindow &window) {
     }
 }
 
+// Moves the shape downwards on every loop
 void tetris::drop_shape() {
     for (size_t i = 0; i < live_coords.size(); i++) {
         live_coords[i].y += 1;
@@ -91,6 +100,7 @@ void tetris::drop_shape() {
     this->rotation_point = live_coords[0]; 
 }
 
+// Moves the shape sideways via player input
 void tetris::move_sideways(sf::RenderWindow &window) {
        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
            if (this->against_left_side() == false && this->against_shape_left_side == false) {
@@ -109,8 +119,9 @@ void tetris::move_sideways(sf::RenderWindow &window) {
        }
 }
 
+// Rotates the shape via player input
 void tetris::rotate(sf::RenderWindow &window) {
-    // Rotate Left
+    // Rotate Shape Left
     if (rotate_left == true && against_left_side() == false && against_right_side() == false && against_shape_left_side == false && against_shape_right_side == false) {
            for (size_t i = 0; i < live_coords.size(); i++) {
                if (i != 0) {
@@ -129,7 +140,7 @@ void tetris::rotate(sf::RenderWindow &window) {
            }
         rotate_left = false;
     }
-    // Rotate Right
+    // Rotate Shape Right
     if (rotate_right == true && against_left_side() == false && against_right_side() == false && against_shape_left_side == false && against_shape_right_side == false) {
         for (size_t i = 0; i < live_coords.size(); i++) {
                 if (i != 0) {
@@ -150,6 +161,7 @@ void tetris::rotate(sf::RenderWindow &window) {
     }
 }
 
+// Checks to see if shape is up against the left side of the Grid
 bool tetris::against_left_side() {
     bool result {false};
     for (size_t i = 0; i < live_coords.size(); i++) {
@@ -160,6 +172,7 @@ bool tetris::against_left_side() {
     return result; 
 }
 
+// Checks to see if shape is up against the right side of the Grid
 bool tetris::against_right_side() {
     bool result {false};
     for (size_t i = 0; i < live_coords.size(); i++) {
@@ -182,6 +195,7 @@ int tetris::return_next_colour() {
     return next_colour_index;
 }
 
+// Calculates next coordinates to pass to Spawn tetris function
 void tetris::calculate_next_coords() {
     int i = rand() % 6;
     next_coords = spawn_coords[i];
